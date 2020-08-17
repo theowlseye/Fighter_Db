@@ -8,7 +8,63 @@
         <!-- from here using the line below -->
         <!--link href="/css/non-existent-file.css" rel="stylesheet" type="text/css"-->
         <!--  -->
-        <script language="JavaScript" type="text/javascript">  
+        <script language="JavaScript" type="text/javascript"> 
+           /* checkform() is the overall function called from */
+       /* our HTML when the user submits the form */
+           function checkform (form)
+           {
+              /* isEmpty() returns true and alerts the user if they left a field empty */
+             function isEmpty (fixwhat, s_called)
+              {
+                if (fixwhat=="")
+                 {
+                  alert("Please enter " + s_called);
+                  return true;
+                 } 
+                 else 
+                 {
+                     return false;
+                 }    
+           }
+
+           /* charCheck() returns false and alerts the user if they used any non-alphanumeric characters */
+           function charCheck(fixwhat)
+           {
+               var validchars = '@-_.0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+               if(isValid(fixwhat,validchars))
+               {
+                   return true;
+               } 
+              else {
+                   alert("Please use only letters or numbers in this field");
+                   return false;
+               }
+           }
+
+           /* isValid is used by the charCheck() function to look through each 'validchars' one at a time */
+           function isValid(string,validchars)
+           {
+               for (var i=0; i< string.length; i++)
+               {
+                 if (validchars.indexOf(string.charAt(i)) === -1) {return false;}
+               }
+               return true;
+           }
+
+           // Check for empty fields
+           if (is_empty (form.t_email.value,"your email address")) { form.t_email.focus();  return false;}
+           // We only need password if they are signing in, NOT if they want a password reset email
+           // later we'll add an extra "if" right here to make sure which form they are submitting
+           if (is_empty (form.t_password.value,"your password")) { form.t_password.focus();  return false;}
+
+           //check for weird chars
+           if (charCheck(form.t_email.value)===false) {form.t_email.focus(); return false;}
+           // later we'll add an extra "if" right here to make sure which form they are submitting
+           if (charCheck(form.t_password.value)===false) {form.t_password.focus(); return false;}
+
+           return true ;
+       }
+       //-->
         </script>
    </head>
 <body>
